@@ -1,38 +1,103 @@
-.App {
-  text-align: center;
+/* 1. BACKGROUND GRAIN EFFECT (Website ko premium texture deta hai) */
+.bg-grain {
+  position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
+.bg-grain::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
   pointer-events: none;
+  z-index: 50;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* 2. SHINY TEXT ANIMATION (DM LACE logo ke liye) */
+.shiny-text {
+  background: linear-gradient(
+    to right,
+    #ffffff 20%,
+    #D4AF37 40%,
+    #D4AF37 60%,
+    #ffffff 80%
+  );
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+@keyframes shine {
   to {
-    transform: rotate(360deg);
+    background-position: 200% center;
   }
+}
+
+/* 3. FLOATING ANIMATION (Icons ya Cards ke liye) */
+.float-anim {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* 4. GLASSMORPHISM (Premium Translucent Effect) */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 5. GOLD GRADIENT TEXT */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 6. BUTTON HOVER EFFECT */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+}
+
+.btn-primary:hover::after {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+
+/* Image Hover Zoom Overlay */
+.img-zoom-container {
+  overflow: hidden;
+}
+
+.img-zoom-container img {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom-container:hover img {
+  transform: scale(1.1);
 }
