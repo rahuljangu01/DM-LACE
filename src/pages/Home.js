@@ -1,9 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async'; 
 
 const Home = () => {
   return (
+    <>
+     <Helmet>
+        <title>DM Lace Surat | Best Lace Manufacturer & Wholesale Supplier in India</title>
+        <meta name="description" content="DM Lace Surat: Leading manufacturer of premium Zari borders, Cotton Schiffli laces, and Designer trims. Specialized in bulk supply and high-quality jobwork since 2021." />
+        <meta name="keywords" content="Lace manufacturer Surat, Zari border wholesale, Cotton lace factory Surat, Jobwork lace Surat, DM Lace, Designer trims India, Embroidery lace wholesale" />
+        
+        {/* Open Graph / Facebook / WhatsApp sharing tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="DM Lace Surat | Premium Lace Manufacturing Studio" />
+        <meta property="og:description" content="Explore our exclusive archive of designer laces and Zari borders. Quality meets precision in every stitch." />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:url" content="https://dm-lace.vercel.app" />
+      </Helmet>
     <div className="bg-[#030303] text-white">
 
       {/* HERO SECTION */}
@@ -95,6 +109,7 @@ const Home = () => {
   </div>
 </section>
     </div>
+    </>
   );
 };
 export default Home;

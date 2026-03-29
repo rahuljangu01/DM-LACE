@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async'; 
 
 const Designs = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -33,6 +34,17 @@ const Designs = () => {
     : designData.filter(item => item.category === activeCategory);
 
   return (
+
+    <>
+    <Helmet>
+      <title>Lace Design Gallery | Zari, Cotton & Sequence Borders - DM Lace</title>
+      <meta name="description" content="Explore our exclusive archive of designer laces. Wholesale collection of Bridal Zari borders, Cotton Schiffli, Gota Patti, and Sequence trims from Surat." />
+      <meta name="keywords" content="Lace designs catalog, Zari border photos, Cotton lace gallery, Embroidery patterns Surat, Latest lace trends 2024" />
+      
+      {/* Open Graph Tags */}
+      <meta property="og:title" content="DM Lace Gallery | Explore Exclusive Archive" />
+      <meta property="og:description" content="View our latest collection of premium designer laces and trims." />
+    </Helmet>
     <div className="bg-[#030303] min-h-screen pt-24 md:pt-40 pb-16 px-4 md:px-6 selection:bg-[#C5A059] selection:text-black font-sans">
       
       {/* --- HEADER --- */}
@@ -99,6 +111,7 @@ const Designs = () => {
          <p className="text-gray-700 uppercase tracking-[0.5em] text-[8px] font-black">DM LACE SURAT • PRECISION JOBWORK</p>
       </div>
     </div>
+  </>
   );
 };
 

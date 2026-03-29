@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Zap, Star, Award } from 'lucide-react';
+import { Helmet } from 'react-helmet-async'; 
 
 const About = () => {
   // Animation Variants
@@ -12,6 +13,17 @@ const About = () => {
   };
 
   return (
+
+    <>
+    <Helmet>
+    <title>About DM Lace Surat | Our Legacy & Craftsmanship</title>
+    <meta name="description" content="Discover the journey of DM Lace Surat. Established in 2021 by Mr. Kanaram, we focus on high-quality jobwork and boutique-style lace manufacturing in Surat." />
+    <meta name="keywords" content="DM Lace history, Kanaram Surat, Lace factory Surat, Quality lace manufacturing, Surat textile heritage" />
+    
+    {/* Open Graph Tags */}
+    <meta property="og:title" content="About DM Lace | The Story Behind the Threads" />
+    <meta property="og:description" content="Learn how we craft the new standard in lace manufacturing since 2021." />
+  </Helmet>
     <div className="bg-[#030303] text-[#F4F4F4] pt-24 pb-16 selection:bg-[#C5A059] selection:text-black font-sans overflow-hidden">
       
       {/* --- 1. REFINED HERO SECTION --- */}
@@ -144,6 +156,7 @@ const About = () => {
       </section>
 
     </div>
+    </>
   );
 };
 

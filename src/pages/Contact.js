@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, MessageCircle, Globe } from 'lucide-react';
+import { Helmet } from 'react-helmet-async'; 
 
 const Contact = () => {
   const fadeInUp = {
@@ -11,6 +12,17 @@ const Contact = () => {
   };
 
   return (
+
+  <>
+    <Helmet>
+    <title>Contact DM Lace Surat | Factory Location & Bulk Enquiries</title>
+    <meta name="description" content="Get in touch with DM Lace Surat for bulk orders and jobwork. Visit our factory in GIDC Pandesara or our studio on Ring Road, Surat." />
+    <meta name="keywords" content="Contact DM Lace, Surat lace factory address, Bulk lace enquiry, Wholesale lace supplier contact, GIDC Pandesara textile" />
+    
+    {/* Open Graph Tags */}
+    <meta property="og:title" content="Contact DM Lace Surat | Scale Your Production" />
+    <meta property="og:description" content="Reach out to us for direct factory pricing and custom lace orders." />
+  </Helmet>
     <div className="bg-[#030303] text-[#F4F4F4] pt-24 md:pt-32 pb-12 md:pb-16 selection:bg-[#C5A059] selection:text-black font-sans overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         
@@ -128,6 +140,7 @@ const Contact = () => {
 
       </div>
     </div>
+</>
   );
 };
 
