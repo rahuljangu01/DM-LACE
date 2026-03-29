@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, MessageCircle, Globe } from 'lucide-react';
+import { Send, MessageCircle, Globe } from 'lucide-react';
 
 const Contact = () => {
   const fadeInUp = {
@@ -118,7 +118,8 @@ const Contact = () => {
         {/* --- 4. THE INDUSTRIAL HUB INDICATOR --- */}
         <motion.div 
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
           className="mt-16 md:mt-32 pt-12 md:pt-20 border-t border-white/5 text-center"
         >
           <p className="font-syne text-[8px] md:text-[10px] tracking-[0.5em] md:tracking-[0.8em] font-black uppercase text-gray-700 mb-4">Manufacturing Hub</p>

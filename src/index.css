@@ -15,7 +15,9 @@ body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
-
+.bg-grain::before {
+  opacity: 0.01; 
+}
 .font-serif { font-family: 'Playfair Display', serif; }
 .font-syne { font-family: 'Syne', sans-serif; }
 

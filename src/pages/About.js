@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, ShieldCheck, Zap, Star, Award } from 'lucide-react';
+import { ShieldCheck, Zap, Star, Award } from 'lucide-react';
 
 const About = () => {
   // Animation Variants
@@ -110,7 +110,8 @@ const About = () => {
 
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
             className="flex justify-center order-1 lg:order-2"
           >
             <div className="relative w-full max-w-xs aspect-[3/4] bg-zinc-800 rounded-3xl overflow-hidden border border-[#C5A059]/20 shadow-2xl">

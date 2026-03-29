@@ -72,6 +72,7 @@ const Home = () => {
         {/* Image */}
         <img 
           src={item.img} 
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 md:group-hover:scale-110" 
           alt={item.name} 
         />
