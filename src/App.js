@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { HelmetProvider, Helmet } from 'react-helmet-async'; // SEO
 import { Analytics } from '@vercel/analytics/react'; // Vercel Analytics
 import { SpeedInsights } from "@vercel/speed-insights/react"; // Speed Insights
@@ -29,10 +29,10 @@ const ScrollToTop = () => {
   return null;
 };
 
-// 3. CONDITIONAL FOOTER LOGIC (Sirf Home aur Contact par dikhega)
+// 3. CONDITIONAL FOOTER LOGIC (Sirf Contact par dikhega - Home me already embedded hai)
 const ConditionalFooter = () => {
   const location = useLocation();
-  const showFooterPaths = ['/', '/contact'];
+  const showFooterPaths = ['/contact'];
   return showFooterPaths.includes(location.pathname) ? <Footer /> : null;
 };
 
@@ -67,14 +67,72 @@ function AppContent() {
       
       <main>
         <AnimatePresence mode="wait">
-          {/* Transition key enables smooth page fading */}
           <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/designs" element={<Designs />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* Catch-all 404 handling */}
-            <Route path="*" element={<Home />} />
+            <Route 
+              path="/" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Home />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="/designs" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Designs />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="/about" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <About />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="/contact" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Contact />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="*" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Home />
+                </motion.div>
+              } 
+            />
           </Routes>
         </AnimatePresence>
       </main>

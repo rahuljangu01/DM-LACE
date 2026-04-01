@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Sparkles, Quote } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState(null);
   const location = useLocation();
 
-  // Scroll logic for Navbar background
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -23,97 +29,260 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-[150] transition-all duration-500 ${scrolled ? 'bg-black/90 backdrop-blur-md py-3 border-b border-white/5 shadow-2xl' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
-        
-        {/* LOGO AREA */}
-        <div className="relative w-32 md:w-48 h-10 flex items-center">
-          <Link to="/" className="z-[200]">
-            <img src="/logo.png" alt="DM Lace" className="h-14 md:h-32 w-auto object-contain drop-shadow-lg" />
-          </Link>
-        </div>
-
-        {/* DESKTOP MENU (Hidden on Mobile) */}
-        <div className="hidden lg:flex items-center space-x-10">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              to={link.path} 
-              className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${location.pathname === link.path ? 'text-yellow-500' : 'text-gray-400 hover:text-white'}`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-
-        {/* TOGGLE BUTTON */}
-        <div className="flex items-center gap-4 relative z-[200]">
-          <Link to="/contact" className="hidden sm:flex bg-white text-black px-6 py-2 rounded-full font-black text-[9px] uppercase tracking-widest hover:bg-yellow-500 transition-all">
-            GET QUOTE
-          </Link>
-          <button 
-            className="lg:hidden text-white bg-white/5 p-2 rounded-xl border border-white/10 hover:bg-white/10 transition-all" 
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-
-        {/* --- COMPACT MOBILE DROPDOWN (Right Corner) --- */}
-        <AnimatePresence>
-          {isOpen && (
+    <>
+      {/* Fixed Navbar */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-[200] transition-all duration-300 ${
+          scrolled 
+            ? 'bg-black/90 backdrop-blur-md border-b border-white/10' 
+            : 'bg-gradient-to-b from-black/90 to-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="flex justify-between items-center h-20 md:h-24">
+            
+            {/* LOGO */}
             <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute top-16 right-6 w-64 bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:hidden p-6 z-[180] overflow-hidden"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2"
             >
-              {/* Background Glow inside menu */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-yellow-600/10 blur-3xl rounded-full" />
-
-              <div className="flex flex-col gap-4 relative z-10">
-                {navLinks.map((link) => (
-                  <Link 
-                    key={link.name} 
-                    to={link.path} 
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between group py-2"
+              <Link to="/" className="flex items-center gap-2">
+                <motion.img 
+                  src="/logo.png" 
+                  alt="DM Lace" 
+                  className={`h-16 md:h-20 lg:h-24 w-auto transition-all duration-300 ${
+                    scrolled ? 'h-14 md:h-16' : ''
+                  }`}
+                  draggable={false}
+                />
+                {scrolled && (
+                  <motion.span
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="hidden md:block text-[#C5A059] text-xs font-bold uppercase tracking-wider"
                   >
-                    <span className={`text-xs font-bold uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-yellow-500' : 'text-gray-400 group-hover:text-white'}`}>
+                    Est. 2021
+                  </motion.span>
+                )}
+              </Link>
+            </motion.div>
+
+            {/* DESKTOP MENU */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <Link 
+                    to={link.path}
+                    onMouseEnter={() => setHoveredLink(link.name)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="relative px-5 py-3 group"
+                  >
+                    <motion.span 
+                      className={`text-[11px] font-bold uppercase tracking-[0.2em] ${
+                        location.pathname === link.path 
+                          ? 'text-[#C5A059]' 
+                          : 'text-gray-400'
+                      }`}
+                      animate={{
+                        color: hoveredLink === link.name ? '#ffffff' : undefined
+                      }}
+                    >
                       {link.name}
-                    </span>
-                    <ArrowRight size={14} className={`transition-all duration-300 ${location.pathname === link.path ? 'text-yellow-500 translate-x-0 opacity-100' : 'text-gray-700 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0'}`} />
+                    </motion.span>
+                    
+                    {/* Animated underline - enhanced */}
+                    <motion.div
+                      className="absolute bottom-1 left-1/2 h-[2px] bg-[#C5A059]"
+                      initial={{ width: 0, x: "-50%" }}
+                      animate={{ 
+                        width: location.pathname === link.path ? '70%' : 
+                               hoveredLink === link.name ? '40%' : '0%'
+                      }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    />
+                    
+                    {/* Hover glow effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-[#C5A059]/5 rounded-lg"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: hoveredLink === link.name ? 1 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    />
                   </Link>
-                ))}
+                </motion.div>
+              ))}
+            </div>
 
-                <div className="h-[1px] bg-white/5 my-2" />
-
+            {/* CTA & MOBILE TOGGLE */}
+            <div className="flex items-center gap-3">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="hidden sm:block"
+              >
                 <Link 
                   to="/contact" 
-                  onClick={() => setIsOpen(false)}
-                  className="bg-yellow-600 text-black text-center py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-white transition-all active:scale-95 shadow-lg shadow-yellow-600/10"
+                  className="group relative flex items-center gap-2 bg-[#C5A059] text-black px-6 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-widest overflow-hidden"
                 >
-                  Request Quote
+                  <motion.span 
+                    className="relative z-10 flex items-center gap-2"
+                    whileHover={{ x: 3 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <Quote size={12} />
+                    Get Quote
+                  </motion.span>
+                  <motion.div
+                    className="absolute inset-0 bg-white"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </Link>
-                
-                <p className="text-center text-[8px] text-gray-700 font-bold uppercase tracking-widest mt-2">
-                  Established 2021
-                </p>
+              </motion.div>
+
+              {/* Animated mobile toggle button */}
+              <motion.button 
+                whileTap={{ scale: 0.9 }}
+                className="lg:hidden relative flex items-center justify-center w-10 h-10 bg-white/10 rounded-xl border border-white/20 overflow-hidden"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-[#C5A059]/20"
+                  initial={{ scale: 0 }}
+                  whileTap={{ scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+                <AnimatePresence mode="wait">
+                  {isOpen ? (
+                    <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                      <X size={20} className="text-white relative z-10" />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                      <Menu size={20} className="text-white relative z-10" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* MOBILE MENU OVERLAY */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-lg z-[150] lg:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            
+            <motion.div
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '100%', opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0A0A0A]/95 backdrop-blur-2xl border-l border-white/10 z-[160] lg:hidden"
+            >
+              <div className="flex flex-col h-full p-6">
+                <div className="flex justify-between items-center mb-10">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link to="/" onClick={() => setIsOpen(false)}>
+                      <img src="/logo.png" alt="DM Lace" className="h-12" />
+                    </Link>
+                  </motion.div>
+                  <motion.button 
+                    whileHover={{ scale: 1.1, rotate: 90 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setIsOpen(false)} 
+                    className="p-2 rounded-full bg-white/5"
+                  >
+                    <X size={24} className="text-gray-400" />
+                  </motion.button>
+                </div>
+
+                <div className="flex-1 flex flex-col gap-2">
+                  {navLinks.map((link, i) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 40 }}
+                      transition={{ delay: i * 0.08, type: "spring", stiffness: 300 }}
+                    >
+                      <Link 
+                        to={link.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`group flex items-center justify-between p-4 rounded-xl transition-all ${
+                          location.pathname === link.path 
+                            ? 'bg-[#C5A059]/20 text-[#C5A059]' 
+                            : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                        }`}
+                      >
+                        <motion.span 
+                          className="text-sm font-bold uppercase tracking-wider"
+                          whileHover={{ x: 5 }}
+                        >
+                          {link.name}
+                        </motion.span>
+                        <motion.div
+                          whileHover={{ x: 5, scale: 1.2 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <ArrowRight size={16} className={`${location.pathname === link.path ? 'text-[#C5A059]' : 'text-gray-600 group-hover:text-[#C5A059]'}`} />
+                        </motion.div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="pt-6 space-y-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <Link 
+                      to="/contact"
+                      onClick={() => setIsOpen(false)}
+                      className="group relative block w-full bg-[#C5A059] text-black text-center py-4 rounded-xl font-bold uppercase text-xs overflow-hidden"
+                    >
+                      <motion.span className="relative z-10">Request Quote</motion.span>
+                      <motion.div
+                        className="absolute inset-0 bg-white/20"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </Link>
+                  </motion.div>
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="text-center text-[10px] text-gray-600"
+                  >
+                    Est. 2021 • Surat, India
+                  </motion.p>
+                </div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Background Overlay (Optional: If you want to close menu when clicking outside) */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-[140] lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-    </nav>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
